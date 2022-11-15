@@ -1,0 +1,105 @@
+---
+title: "Problem 4"
+author: "Samriddha Adhikary"
+date: "2022-11-15"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r,warning=FALSE}
+library(MASS)
+library(LaplacesDemon)
+```
+
+## Part A
+i)
+```{r pressure, echo=T}
+negloglike=function(theta,d1,d2){
+  beta0=theta[1]
+  beta1=theta[2]
+  sigma=theta[3]
+  d2=beta0+beta1*d2
+  l=sum(dnorm(d1,mean=d2,sd=sigma,log=T))
+  return(-l)
+}
+x=Insurance$Holders
+y=Insurance$Claims
+estimate=optim(c(10,0,1),negloglike,d1=y,d2=x)
+estimate$par
+```
+ii)
+```{r}
+bic=2*(negloglike(estimate$par,y,x))+log(length(x))*3
+bic
+```
+
+## Part B 
+i)
+```{r}
+negloglikelap=function(theta,d1,d2){
+  beta0=theta[1]
+  beta1=theta[2]
+  sigma=theta[3]
+  d2=beta0+beta1*d2
+  l=sum(dlaplace(d1,location=d2,scale=sigma,log=T))
+  return(-l)
+}
+estimate=optim(c(1,1,1),negloglikelap,d1=y,d2=x)
+estimate$par
+
+```
+ii)
+```{r}
+bic=2*(negloglikelap(estimate$par,y,x))+log(length(x))*3
+bic
+```
+## Part C
+i)
+```{r}
+negloglikelognorm=function(theta,d1,d2){
+  n=length(x)
+  l=0
+  beta0=theta[1]
+  beta1=theta[2]
+  sigma=theta[3]
+  for (i in 1:n){
+    if(d1[i]>0){
+      mu=beta0+beta1*d2[i]
+      l=l+(dlnorm(d1[i],meanlog=mu,sdlog=sigma,log=T))
+    }
+  }
+  return(-l)
+}
+estimate=optim(c(1,0,1),negloglikelognorm,d1=y,d2=x)
+estimate$par
+```
+ii)
+```{r}
+bic=2*(negloglikelognorm(estimate$par,y,x))+log(length(x))*3
+bic
+```
+## Part D
+```{r,warning=FALSE}
+negloglikegamma=function(theta,d1,d2){
+  n=length(x)
+  l=0
+  beta0=theta[1]
+  beta1=theta[2]
+  sigma=theta[3]
+  for (i in 1:n){
+    if(d1[i]>0){
+      mu=beta0+beta1*d2[i]
+      l=l+(dgamma(d1[i],shape=mu,scale=sigma,log=T))
+    }
+  }
+  return(-l)
+}
+estimate=optim(c(1,1,1),negloglikegamma,d1=y,d2=x)
+estimate$par
+```
+iii) Of the three models, that is, the models in parts A,B and C, the BIC of the second model, that is, the Laplacian model appears to be the least. So it is the best fit model.
