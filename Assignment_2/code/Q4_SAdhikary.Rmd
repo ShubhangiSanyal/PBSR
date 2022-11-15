@@ -8,7 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
+For this problem, we have defined a function which returns the negative log-likelihood of the required distributions. We have used the "Claims" data, under the "Insurance" dataset, to generate the probability density function before taking its log and computing the negative log-likelihood function. Then, we have estimated the model parameters using the `optim` function. Thereafter, we have calculated the Bayesian Information Criterion(BIC) for the first three models as asked. Finally, we have compared the three BIC's to determine the best fit model.
 
 
 ```{r,warning=FALSE}
@@ -17,6 +17,7 @@ library(LaplacesDemon)
 ```
 
 ## Part A
+Distribution- Normal <br>
 i)
 ```{r pressure, echo=T}
 negloglike=function(theta,d1,d2){
@@ -39,6 +40,7 @@ bic
 ```
 
 ## Part B 
+Distribution- Laplace <br>
 i)
 ```{r}
 negloglikelap=function(theta,d1,d2){
@@ -59,6 +61,7 @@ bic=2*(negloglikelap(estimate$par,y,x))+log(length(x))*3
 bic
 ```
 ## Part C
+Distribution- LogNormal <br>
 i)
 ```{r}
 negloglikelognorm=function(theta,d1,d2){
@@ -84,6 +87,7 @@ bic=2*(negloglikelognorm(estimate$par,y,x))+log(length(x))*3
 bic
 ```
 ## Part D
+Distribution- Gamma
 ```{r,warning=FALSE}
 negloglikegamma=function(theta,d1,d2){
   n=length(x)
