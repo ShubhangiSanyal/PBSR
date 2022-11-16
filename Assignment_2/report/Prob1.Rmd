@@ -1,0 +1,196 @@
+---
+title: "PBSR - Assignment 2"
+author: "Shubhangi Sanyal<br>MDS202238"
+date: '2022-11-15'
+output: html_document
+---
+
+# Problem 1:
+
+## Answer for 1:
+
+The distribution of $X$ can be defined in terms of the sequence $S$ as follows,
+
+\begin{equation}
+\begin{alignedat}{3}
+\mathbb{P}[X = x] = ar^x
+\end{alignedat}
+\end{equation}
+
+where, $X$ takes value in $\mathbb{N}=\{0,1,2,\cdots\}$.
+
+Now, following the property of a probability mass function, we can write that, 
+
+\begin{equation}
+\begin{alignedat}{3}
+& \sum_{x = 0}^\infty \mathbb{P}[X=x] = 1\\
+\Rightarrow\; & \sum_{x = 0}^\infty ar^x = 1\\
+\Rightarrow\; & a\sum_{x = 0}^\infty r^x = 1\\
+\Rightarrow\; & \frac{a}{1-r} = 1  \text{(Sum of infinite GP series)}\\
+\therefore\; & a = 1-r
+\end{alignedat}
+\end{equation}
+
+Hence, from the above, the following two necessary conditions can be derived in order to define a proper probability distribution for $X$:
+
+- $0<a<1$
+- $0<r<1$
+
+Thus, the probability mass function can be written as, 
+
+\begin{equation}
+\begin{alignedat}{3}
+f(x) &= (1-r)r^x; \text{ for } x\in \mathbb{N}=\{0,1,2,\cdots\}\\
+&= 0; \text{ otherwise}
+\end{alignedat}
+\end{equation}
+<br>
+
+## Answer for 2:
+
+In order to prove the existence of the mean and variance of the probability model defined above, the following expectations must exist:
+
+- $\mathbb{E}(\mid X\mid) < \infty$
+- $\mathbb{E}(\mid X^2\mid) < \infty$
+
+\begin{equation}
+\begin{alignedat}{3}
+\mathbb{E}[\mid X\mid] &= \sum_{x = 0}^\infty \mid x\mid (1-r)r^x = \sum_{x = 0}^\infty x(1-r)r^x < \infty
+\end{alignedat}
+\end{equation}
+$\therefore\mathbb{E}(\mid X\mid)$ exists (Proved).<br>
+\begin{equation}
+\begin{alignedat}{3}
+\mathbb{E}[\mid X^2\mid] &= \sum_{x = 0}^\infty \mid x^2\mid (1-r)r^x = \sum_{x = 0}^\infty x^2(1-r)r^x< \infty
+\end{alignedat}
+\end{equation}
+$\therefore\mathbb{E}(\mid X^2\mid)$ exists (Proved).<br>
+
+Thus, the mean and variance of the probability model followed by $X$ exist.
+<br>
+
+## Answer for 3:
+
+\begin{equation}
+\begin{alignedat}{3}
+& \sum_{x=0}^\infty f(x)=1\\
+\Rightarrow\; & \sum_{x=0}^\infty (1-r)r^x =1
+\end{alignedat}
+\end{equation}
+
+Differentiating w.r.t $r$, we get,
+
+\begin{equation}
+\begin{alignedat}{3}
+& \sum_{x=0}^\infty {x r^{x-1}(1-r)-r^x}=0 \;\;\;\;\;\;\;\;\cdots\textbf{(a)}\\
+\Rightarrow\; & \frac{1}{r} \sum_{x=0}^\infty {x r^x(1-r)} = \sum_{x=0}^\infty r^x\\
+\Rightarrow\; & \sum_{x=0}^\infty {x r^x(1-r)} = \frac{r}{1-r} \;\;\;\;\;\; \text{(Since,}\sum_{x=0}^\infty r^x = \frac{1}{1-r} \text{)}\\ 
+\therefore\; & \mathbb{E}(X)=\frac{r}{1-r}
+\end{alignedat}
+\end{equation}
+
+Further, differentiating $\textbf{(a)}$ w.r.t $r$, we get,
+
+\begin{equation}
+\begin{alignedat}{3}
+& \sum_{x=0}^\infty {x(x-1)r^{x-2}(1-r)-xr^{x-1}-xr^{x-1}} = 0\\
+\Rightarrow\; & \sum_{x=0}^\infty {x(x-1)r^{x-2}(1-r)} = \sum_{x=0}^\infty 2xr^{x-1}\\
+\Rightarrow\; & \frac{1}{r^2} \sum_{x=0}^\infty {x(x-1)r^x(1-r)} = \frac{2}{r(1-r)} \sum_{x=0}^\infty xr^x(1-r)\\
+\Rightarrow\; & \sum_{x=0}^\infty {x(x-1)r^x(1-r)} = \frac{2r}{1-r} \sum_{x=0}^\infty xr^x(1-r)\\
+\Rightarrow\; & \mathbb{E}[X(X-1)] = \frac{2r}{1-r} \mathbb{E}[X]\\
+\Rightarrow\; & \mathbb{E}[X^2]-\mathbb{E}[X] = \frac{2r}{1-r} \mathbb{E}[X] = \frac{2r}{1-r}\frac{r}{1-r} = 2 (\mathbb{E}[X])^2 \\
+\Rightarrow\; & \mathbb{E}[X^2]-(\mathbb{E}[X])^2 = (\mathbb{E}[X])^2 + \mathbb{E}[X]\\
+\therefore\; & \mathbb{V}ar(X) = \frac{r^2}{(1-r)^2} + \frac{r}{1-r} = \frac{r}{(1-r)^2}
+\end{alignedat}
+\end{equation}
+
+## Answer for 4:
+
+From the historical summary statistics, we have $\text{Mean = 1.5}$.
+
+Therefore, 
+\begin{equation}
+\begin{alignedat}{3}
+& \mathbb{E}(X)=1.5\\
+\Rightarrow\; & \frac{r}{1-r} = 1.5\\
+\therefore\; & r = 0.6
+\end{alignedat}
+\end{equation}
+
+```{r}
+r <- 1.5/2.5
+cat("Value of r = ",r)
+```
+
+**(a)** The probability that home team will score at least one goal is $\mathbb{P}(X \ge 1)$
+
+Now, 
+
+$$\mathbb{P}(X \ge 1) = 1-\mathbb{P}(X=0) = 1-(1-r)=r=0.6$$
+```{r}
+q4a<-pgeom(0,0.4,lower.tail=FALSE)
+cat("The probability that home team will score at least one goal is ",q4a)
+```
+
+
+
+**(b)** The probability that home team will score at least one goal but less than four goal is 
+$$\mathbb{P}(1\le X<4) = \mathbb{P}(X<4)-\mathbb{P}(X<1)$$
+
+The `R code` below can be used to calculate the above probability. 
+
+```{r}
+r = 0.6
+q4b = pgeom(q = 3, prob = 1-r, lower.tail = TRUE)-pgeom(q=0,prob=1-r,lower.tail=TRUE)
+cat("The probability that home team will score at least one goal but less than four goal is ",q4b)
+```
+
+## Answer for 5:
+
+Now, we use the same historical summary statistics, $Mean = 1.5$, to build a Poisson Model for $X$. Thus, $$X \sim Poisson(\lambda = 5)$$
+
+
+**(a)** The probability that home team will score at least one goal is $\mathbb{P}(X \ge 1)$. This can be calculated in `R` as follows:
+
+```{r}
+# P(Home team will score at least 1 goal) = 1 - P(X=0)
+q5a=1-dpois(0,1.5)
+cat("The probability that home team will score at least one goal = ",q5a)
+```
+**(b)** The probability that home team will score at least one goal but less than four goal is 
+$$\mathbb{P}(1\le X<4) = \mathbb{P}(X<4)-\mathbb{P}(X<1)= \mathbb{P}(X\le 3)-\mathbb{P}(X\le 0)$$
+This can be calculated in `R` as follows:
+
+```{r}
+q5b= ppois(3,1.5)-ppois(0,1.5)
+cat("The probability that home team will score at least one goal but less than four goal = ",q5b)
+```
+
+## Answer for 6: 
+
+Even though the historical summary statistics favours geometric distribution, since the variance is more than the mean in both, it is seen that the Poisson model would be a better fit for the based on the probabilities found in question 5 (a) and (b). Hence, the Poisson model is preferred.
+
+
+
+## Answer for 7:   
+
+Likelihood function of geometric distribution: $$L(r|\mathbf{x}) = \prod_{i=1}^{n}
+(1-r)r^{x_i} = (1-r)^n\,r^{\sum_{i=1}^{n} x_i}$$
+
+<br>
+Assumptions:
+
+- $0<r<1$
+- $x=0,1,2,\cdots$
+<br>
+
+Likelihood function of Poisson distribution: $$L(\lambda|\mathbf{x}) = \prod_{i=1}^{n}
+\frac{e^{-\lambda}\lambda^{x_i}}{x_i!} = e^{-n\lambda}
+\prod_{i=1}^{n}\frac{\lambda^{x_i}}{x_i!}$$
+
+<br>
+Assumptions:
+
+- $0<\lambda<1;\;\;\lambda=r$
+- $x=0,1,2,\cdots$
+<br>
