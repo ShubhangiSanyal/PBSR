@@ -1,0 +1,694 @@
+---
+title: "**PBSR - Assignment 2**"
+author: "Group Assignment done by:<br><br>Samriddha Adhikary (MDS202229)<br>Shubhangi Sanyal (MDS202238)<br>Subhashree Saha (MDS202243)"
+date: '**Submitted on: 16th November, 2022**'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo = TRUE)
+```
+
+# **Problem 1:**
+(done by Shubhangi Sanyal)
+
+## Part 1:
+
+The distribution of $X$ can be defined in terms of the sequence $S$ as follows,
+
+\begin{equation}
+\begin{alignedat}{3}
+\mathbb{P}[X = x] = ar^x
+\end{alignedat}
+\end{equation}
+
+where, $X$ takes value in $\mathbb{N}=\{0,1,2,\cdots\}$.
+
+Now, following the property of a probability mass function, we can write that, 
+
+\begin{equation}
+\begin{alignedat}{3}
+& \sum_{x = 0}^\infty \mathbb{P}[X=x] = 1\\
+\Rightarrow\; & \sum_{x = 0}^\infty ar^x = 1\\
+\Rightarrow\; & a\sum_{x = 0}^\infty r^x = 1\\
+\Rightarrow\; & \frac{a}{1-r} = 1  \text{(Sum of infinite GP series)}\\
+\therefore\; & a = 1-r
+\end{alignedat}
+\end{equation}
+
+Hence, from the above, the following two necessary conditions can be derived in order to define a proper probability distribution for $X$:
+
+- $0<a<1$
+- $0<r<1$
+
+Thus, the probability mass function can be written as, 
+
+\begin{equation}
+\begin{alignedat}{3}
+f(x) &= (1-r)r^x; \text{ for } x\in \mathbb{N}=\{0,1,2,\cdots\}\\
+&= 0; \text{ otherwise}
+\end{alignedat}
+\end{equation}
+<br>
+
+## Part 2:
+
+In order to prove the existence of the mean and variance of the probability model defined above, the following expectations must exist:
+
+- $\mathbb{E}(\mid X\mid) < \infty$
+- $\mathbb{E}(\mid X^2\mid) < \infty$
+
+\begin{equation}
+\begin{alignedat}{3}
+\mathbb{E}[\mid X\mid] &= \sum_{x = 0}^\infty \mid x\mid (1-r)r^x = \sum_{x = 0}^\infty x(1-r)r^x < \infty
+\end{alignedat}
+\end{equation}
+$\therefore\mathbb{E}(\mid X\mid)$ exists (Proved).<br>
+\begin{equation}
+\begin{alignedat}{3}
+\mathbb{E}[\mid X^2\mid] &= \sum_{x = 0}^\infty \mid x^2\mid (1-r)r^x = \sum_{x = 0}^\infty x^2(1-r)r^x< \infty
+\end{alignedat}
+\end{equation}
+$\therefore\mathbb{E}(\mid X^2\mid)$ exists (Proved).<br>
+
+Thus, the mean and variance of the probability model followed by $X$ exist.
+<br>
+
+## Part 3:
+
+\begin{equation}
+\begin{alignedat}{3}
+& \sum_{x=0}^\infty f(x)=1\\
+\Rightarrow\; & \sum_{x=0}^\infty (1-r)r^x =1
+\end{alignedat}
+\end{equation}
+
+Differentiating w.r.t $r$, we get,
+
+\begin{equation}
+\begin{alignedat}{3}
+& \sum_{x=0}^\infty {x r^{x-1}(1-r)-r^x}=0 \;\;\;\;\;\;\;\;\cdots\textbf{(a)}\\
+\Rightarrow\; & \frac{1}{r} \sum_{x=0}^\infty {x r^x(1-r)} = \sum_{x=0}^\infty r^x\\
+\Rightarrow\; & \sum_{x=0}^\infty {x r^x(1-r)} = \frac{r}{1-r} \;\;\;\;\;\; \text{(Since,}\sum_{x=0}^\infty r^x = \frac{1}{1-r} \text{)}\\ 
+\therefore\; & \mathbb{E}(X)=\frac{r}{1-r}
+\end{alignedat}
+\end{equation}
+
+Further, differentiating $\textbf{(a)}$ w.r.t $r$, we get,
+
+\begin{equation}
+\begin{alignedat}{3}
+& \sum_{x=0}^\infty {x(x-1)r^{x-2}(1-r)-xr^{x-1}-xr^{x-1}} = 0\\
+\Rightarrow\; & \sum_{x=0}^\infty {x(x-1)r^{x-2}(1-r)} = \sum_{x=0}^\infty 2xr^{x-1}\\
+\Rightarrow\; & \frac{1}{r^2} \sum_{x=0}^\infty {x(x-1)r^x(1-r)} = \frac{2}{r(1-r)} \sum_{x=0}^\infty xr^x(1-r)\\
+\Rightarrow\; & \sum_{x=0}^\infty {x(x-1)r^x(1-r)} = \frac{2r}{1-r} \sum_{x=0}^\infty xr^x(1-r)\\
+\Rightarrow\; & \mathbb{E}[X(X-1)] = \frac{2r}{1-r} \mathbb{E}[X]\\
+\Rightarrow\; & \mathbb{E}[X^2]-\mathbb{E}[X] = \frac{2r}{1-r} \mathbb{E}[X] = \frac{2r}{1-r}\frac{r}{1-r} = 2 (\mathbb{E}[X])^2 \\
+\Rightarrow\; & \mathbb{E}[X^2]-(\mathbb{E}[X])^2 = (\mathbb{E}[X])^2 + \mathbb{E}[X]\\
+\therefore\; & \mathbb{V}ar(X) = \frac{r^2}{(1-r)^2} + \frac{r}{1-r} = \frac{r}{(1-r)^2}
+\end{alignedat}
+\end{equation}
+
+## Part 4:
+
+From the historical summary statistics, we have $\text{Mean = 1.5}$.
+
+Therefore, 
+\begin{equation}
+\begin{alignedat}{3}
+& \mathbb{E}(X)=1.5\\
+\Rightarrow\; & \frac{r}{1-r} = 1.5\\
+\therefore\; & r = 0.6
+\end{alignedat}
+\end{equation}
+
+```{r}
+r <- 1.5/2.5
+cat("Value of r = ",r)
+```
+
+**(a)** The probability that home team will score at least one goal is $\mathbb{P}(X \ge 1)$
+
+Now, 
+
+$$\mathbb{P}(X \ge 1) = 1-\mathbb{P}(X=0) = 1-(1-r)=r=0.6$$
+```{r}
+q4a<-pgeom(0,0.4,lower.tail=FALSE)
+cat("The probability that home team will score at least one goal is ",q4a)
+```
+
+
+
+**(b)** The probability that home team will score at least one goal but less than four goal is 
+$$\mathbb{P}(1\le X<4) = \mathbb{P}(X<4)-\mathbb{P}(X<1)$$
+
+The `R code` below can be used to calculate the above probability. 
+
+```{r}
+r = 0.6
+q4b = pgeom(q = 3, prob = 1-r, lower.tail = TRUE)-pgeom(q=0,prob=1-r,lower.tail=TRUE)
+cat("The probability that home team will score at least one goal but less than four goal is ",q4b)
+```
+
+## Part 5:
+
+Now, we use the same historical summary statistics, $Mean = 1.5$, to build a Poisson Model for $X$. Thus, $$X \sim Poisson(\lambda = 5)$$
+
+
+**(a)** The probability that home team will score at least one goal is $\mathbb{P}(X \ge 1)$. This can be calculated in `R` as follows:
+
+```{r}
+# P(Home team will score at least 1 goal) = 1 - P(X=0)
+q5a=1-dpois(0,1.5)
+cat("The probability that home team will score at least one goal = ",q5a)
+```
+**(b)** The probability that home team will score at least one goal but less than four goal is 
+$$\mathbb{P}(1\le X<4) = \mathbb{P}(X<4)-\mathbb{P}(X<1)= \mathbb{P}(X\le 3)-\mathbb{P}(X\le 0)$$
+This can be calculated in `R` as follows:
+
+```{r}
+q5b= ppois(3,1.5)-ppois(0,1.5)
+cat("The probability that home team will score at least one goal but less than four goal = ",q5b)
+```
+
+## Part 6: 
+
+Even though the historical summary statistics favours geometric distribution, since the variance is more than the mean in both, it is seen that the Poisson model would be a better fit for the based on the probabilities found in question 5 (a) and (b). Hence, the Poisson model is preferred.
+
+
+
+## Part 7:   
+
+Likelihood function of geometric distribution: $$L(r|\mathbf{x}) = \prod_{i=1}^{n}
+(1-r)r^{x_i} = (1-r)^n\,r^{\sum_{i=1}^{n} x_i}$$
+
+<br>
+Assumptions:
+
+- $0<r<1$
+- $x=0,1,2,\cdots$
+<br>
+
+Likelihood function of Poisson distribution: $$L(\lambda|\mathbf{x}) = \prod_{i=1}^{n}
+\frac{e^{-\lambda}\lambda^{x_i}}{x_i!} = e^{-n\lambda}
+\prod_{i=1}^{n}\frac{\lambda^{x_i}}{x_i!}$$
+
+<br>
+Assumptions:
+
+- $0<\lambda<1;\;\;\lambda=r$
+- $x=0,1,2,\cdots$
+<br>
+
+
+# **Problem 2:**
+(done by Subhashree Saha)
+
+
+```{r}
+MLE=function(n1){
+  #1)function to compute mle
+  MyMLE=function(data1){
+    fit = optimize(data1,c(0,50),maximum = T)
+    
+    return(log(fit$maximum))}
+  
+  
+  loglikegamma=function(shape){
+    #2i)simulating from gamma distribution
+    data2=rgamma(n=n1, shape=1.5, scale = 2.2) 
+    
+    l=sum(dgamma(data2,shape,scale=2.2,log=T))
+    return(l)
+  }
+  
+  v<-c((MyMLE(loglikegamma)))
+  #2ii and iii)
+  for(x in 1:1000){
+    v<-append(v,(MyMLE(loglikegamma)))
+    
+  }
+return(v) 
+}
+```
+Histogram of estimated MLE when n=20\
+```{r}
+  #2iv)
+  hist(MLE(20), col="lightblue",xlab='estimated MLE of log alpha',main=' Histogram of the estimated MLEs of log alpha when n=20')
+  #2v)
+  abline(v=log(1.5), col="red", lwd=3, lty=2)
+```
+2.5 percentile point when n=20\
+```{r}
+#2vi)
+q11=quantile(MLE(20),probs=0.025)
+q11
+```
+97.5 percentile point when n=20\
+```{r}
+q12=quantile(MLE(20),probs=0.975)
+q12
+```
+
+Histogram of estimated MLE when n=40\
+```{r}
+  #3)
+  hist(MLE(40), col="lightblue",xlab='estimated MLE of log alpha',main=' Histogram of the estimated MLEs of log alpha when n=40')
+  
+  abline(v=log(1.5), col="red", lwd=3, lty=2)
+```
+2.5 percentile point when n=40\
+```{r}
+q21=quantile(MLE(40),probs=0.025)
+q21
+```
+97.5 percentile point when n=40\
+```{r}
+q22=quantile(MLE(40),probs=0.975)
+q22
+```
+
+Histogram of estimated MLE when n=100\
+```{r}
+  #4)
+  hist(MLE(100), col="lightblue",xlab='estimated MLE of log alpha',main=' Histogram of the estimated MLEs of log alpha when n=100')
+  
+  abline(v=log(1.5), col="red", lwd=3, lty=2)
+```
+2.5 percentile point when n=100\
+```{r}
+q31=quantile(MLE(100),probs=0.025)
+q31
+```
+97.5 percentile point when n=100\
+```{r}
+q32=quantile(MLE(100),probs=0.975)
+q32
+```
+5)Gap between 2.5 and 97.5-percentile points
+
+when n is 20
+```{r}
+gap1=q12-q11
+gap1
+```
+when n is 40
+```{r}
+gap2=q22-q21
+gap2
+```
+when n is 100
+```{r}
+gap3=q32-q31
+gap3
+```
+SO, we see that the gap between 2.5 and 97.5-percentile points are shrinking as sample size n is increasing.
+<br>
+
+# **Problem 3:**
+(done by Subhashree Saha)
+
+```{r}
+library(tidyverse)
+library(scales)
+```
+Comparison of the three models:\
+```{r}
+data_q3 <- faithful %>% 
+  as_tibble()
+x <- sort(data_q3$waiting)
+```
+1)MODEL 1\
+```{r}
+data_q3 <- faithful %>% 
+  as_tibble()
+x <- sort(data_q3$waiting)
+# model 1
+hist(x, xlab = 'waiting', probability = T, col='light blue', main='')
+p <- length(x[x<65])/length(x)
+x1 <- mean(x[x<65])
+y1 <- var(x[x<65])
+scale_1 <- y1/x1
+shape_1<- x1/scale_1
+mean1 <- mean(x[x>=65])
+sd1 <- sd(x[x>=65])
+Newloglike <- function(theta, data){
+  n = length(data)
+  
+  p = theta[1]
+  mu1 = theta[2]
+  sig1 = theta[3]
+  mu2 = theta[4]
+  sig2 = theta[5]
+  
+  l = 0
+  for (i in 1:n) {
+    l = l + log(p*dgamma(data[i], shape = mu1, scale = sig1) + (1-p)*dnorm(data[i], mean = mu2, sd = sig2))
+  }
+  return(-l)
+}
+theta_inital <- c(p, shape_1, scale_1, mean1, sd1)
+fit = optim(theta_inital,
+            Newloglike,
+            data = x,
+            control = list(maxit = 1500),
+            lower = c(0, 0, 0, -Inf, 0),
+            upper = c(1, Inf, Inf, Inf, Inf),
+            method="L-BFGS-B")
+theta_1 = fit$par
+p1=theta_1[1]
+mu1 = theta_1[2]
+sig1 = theta_1[3]
+mu2 = theta_1[4]
+sig2 = theta_1[5]
+model_1 = p1*dgamma(x, shape = mu1, scale = sig1) + (1-p1)*dnorm(x, mean = mu2, sd = sig2)
+lines(x,model_1,lwd=3,col='purple')
+aic_1 <- 2*5 + Newloglike(theta_1, x)
+```
+2)Model2\
+```{r}
+# model 2
+hist(x, xlab = 'waiting', probability = T, col='pink', main='')
+p <- length(x[x<65])/length(x)
+x21 <- mean(x[x<65])
+y21 <- var(x[x<65])
+scale_21 <- y21/x21
+shape_21 <- x21/scale_21
+x22 <- mean(x[x>=65])
+y22 <- var(x[x>=65])
+scale_22 <- y22/x22
+shape_22<- x22/scale_22
+theta_inital2 <- c(p, shape_21,scale_21 , shape_22, scale_22)
+Newloglike2 <- function(theta, data){
+  n <- length(data)
+  
+  p = theta[1]
+  mu1 = theta[2]
+  sig1 = theta[3]
+  mu2 = theta[4]
+  sig2 = theta[5]
+  
+  l <- 0
+  for (i in 1:n) {
+    l = l + log(p*dgamma(data[i], shape = mu1, scale = sig1) + (1-p)*dgamma(data[i], shape = mu2, scale = sig2))
+  }
+  return(-l)
+}
+fit2 = optim(theta_inital2,
+             Newloglike2,
+            data = x,
+            control = list(maxit = 1500),
+            lower = c(0, 0, 0, 0, 0),
+            upper = c(1, Inf, Inf, Inf, Inf),
+            method="L-BFGS-B")
+theta_2 <- fit2$par
+theta_2
+p2=theta_2[1]
+mu12 = theta_2[2]
+sig12 = theta_2[3]
+mu22 = theta_2[4]
+sig22 = theta_2[5]
+model_2 <- p2*dgamma(x, shape = mu12, scale = sig12) + (1-p2)*dgamma(x, shape = mu22, scale = sig22)
+lines(x,model_2,lwd=3,col='purple')
+aic_2 <- 2*5 + Newloglike2(theta_2, x)
+```
+3)Model3\
+```{r}
+hist(x, xlab = 'waiting', probability = T, col='light green', main='')
+p <- length(x[x<65])/length(x)
+x31 <- mean(x[x<65])
+y31 <- var(x[x<65])
+var31 <- log((y31/x31^2) + 1)
+mean31 <- log(x31) - var31/2
+x32 <- mean(x[x>=65])
+y32 <- var(x[x>=65])
+var32<- log((y32/x32^2) + 1)
+mean32 <- log(x32) - var32/2
+theta_inital3 <- c(p, mean31, sqrt(var31), mean32, sqrt(var32))
+Newloglike3 <- function(theta, data) {
+  n <- length(data)
+  
+  p = theta[1]
+  mu1 = theta[2]
+  sig1 = theta[3]
+  mu2 = theta[4]
+  sig2 = theta[5]
+  
+  l <- 0
+  for (i in 1:n) {
+    l = l + log(p*dlnorm(data[i], meanlog = mu1, sdlog = sig1) + (1-p)*dlnorm(data[i], meanlog = mu2, sdlog = sig2))
+  }
+  
+  return(-l)
+}
+fit3 = optim(theta_inital3,
+             Newloglike3,
+            data = x,
+            control = list(maxit = 1500),
+            lower = c(0, -Inf, 0, -Inf, 0),
+            upper = c(1, Inf, Inf, Inf, Inf),
+            method="L-BFGS-B")
+theta_3 <- fit3$par
+p3 <- theta_3[1]
+mu13 <- theta_3[2]
+sig13 <- theta_3[3]
+mu23 <- theta_3[4]
+sig23 <- theta_3[5]
+model_3 <- p3*dlnorm(x, meanlog = mu13, sdlog = sig13) + (1-p3)*dlnorm(x, meanlog = mu23, sdlog = sig23)
+lines(x,model_3,lwd=3,col='purple')
+aic_3 <- 2*5 + Newloglike3(theta_3, x)
+```
+
+AIC for the three models are:
+
+```{r}
+aic_1
+aic_2
+aic_3
+```
+Based on the above three models,model3 has the best fit since it has the lowest AIC\
+
+Therefore based on model3, P(60<waiting<70) is
+```{r}
+q=(p3*plnorm(70, meanlog = mu13, sdlog = sig13) + (1-p3)*plnorm(70, meanlog = mu23, sdlog = sig23)) - (p3*plnorm(60, meanlog = mu13, sdlog = sig13) + (1-p3)*plnorm(60, meanlog = mu23, sdlog = sig23))
+q                                                                                                     
+```
+<br>
+
+# **Problem 4:**
+(done by Samriddha Adhikary)
+
+For this problem, we have defined a function which returns the negative log-likelihood of the required distributions. We have used the "Claims" data, under the "Insurance" dataset, to generate the probability density function before taking its log and computing the negative log-likelihood function. Then, we have estimated the model parameters using the `optim` function. Thereafter, we have calculated the Bayesian Information Criterion(BIC) for the first three models as asked. Finally, we have compared the three BIC's to determine the best fit model.
+
+
+```{r,warning=FALSE}
+library(MASS)
+library(LaplacesDemon)
+```
+
+## Part A
+Distribution- Normal <br>
+i)
+```{r pressure, echo=T}
+negloglike=function(theta,d1,d2){
+  beta0=theta[1]
+  beta1=theta[2]
+  sigma=theta[3]
+  d2=beta0+beta1*d2
+  l=sum(dnorm(d1,mean=d2,sd=sigma,log=T))
+  return(-l)
+}
+x=Insurance$Holders
+y=Insurance$Claims
+estimate=optim(c(10,0,1),negloglike,d1=y,d2=x)
+estimate$par
+```
+ii)
+```{r}
+bic=2*(negloglike(estimate$par,y,x))+log(length(x))*3
+bic
+```
+
+## Part B 
+Distribution- Laplace <br>
+i)
+```{r}
+negloglikelap=function(theta,d1,d2){
+  beta0=theta[1]
+  beta1=theta[2]
+  sigma=theta[3]
+  d2=beta0+beta1*d2
+  l=sum(dlaplace(d1,location=d2,scale=sigma,log=T))
+  return(-l)
+}
+estimate=optim(c(1,1,1),negloglikelap,d1=y,d2=x)
+estimate$par
+```
+ii)
+```{r}
+bic=2*(negloglikelap(estimate$par,y,x))+log(length(x))*3
+bic
+```
+## Part C
+Distribution- LogNormal <br>
+i)
+```{r}
+negloglikelognorm=function(theta,d1,d2){
+  n=length(x)
+  l=0
+  beta0=theta[1]
+  beta1=theta[2]
+  sigma=theta[3]
+  for (i in 1:n){
+    if(d1[i]>0){
+      mu=beta0+beta1*d2[i]
+      l=l+(dlnorm(d1[i],meanlog=mu,sdlog=sigma,log=T))
+    }
+  }
+  return(-l)
+}
+estimate=optim(c(1,0,1),negloglikelognorm,d1=y,d2=x)
+estimate$par
+```
+ii)
+```{r}
+bic=2*(negloglikelognorm(estimate$par,y,x))+log(length(x))*3
+bic
+```
+## Part D
+Distribution- Gamma
+```{r,warning=FALSE}
+negloglikegamma=function(theta,d1,d2){
+  n=length(x)
+  l=0
+  beta0=theta[1]
+  beta1=theta[2]
+  sigma=theta[3]
+  for (i in 1:n){
+    if(d1[i]>0){
+      mu=beta0+beta1*d2[i]
+      l=l+(dgamma(d1[i],shape=mu,scale=sigma,log=T))
+    }
+  }
+  return(-l)
+}
+estimate=optim(c(1,1,1),negloglikegamma,d1=y,d2=x)
+estimate$par
+```
+iii) Of the three models, that is, the models in parts A,B and C, the BIC of the second model, that is, the Laplacian model appears to be the least. So it is the best fit model.
+<br>
+
+# **Problem 5:**
+(done by Shubhangi Sanyal)
+
+Prerequisite code:
+
+
+```{r}
+library(quantmod)
+getSymbols('TCS.NS')
+tail(TCS.NS)
+
+getSymbols('^NSEI')
+tail(NSEI)
+
+TCS_rt = diff(log(TCS.NS$TCS.NS.Adjusted))
+Nifty_rt = diff(log(NSEI$NSEI.Adjusted))
+retrn = cbind.xts(TCS_rt,Nifty_rt) 
+retrn = na.omit(data.frame(retrn))
+```
+
+## Part 1:
+
+Estimate the parameters of the models $\theta=(\alpha,\beta,\sigma)$ using the method of moments type plug-in estimator discussed in the class.
+
+### Answer:
+
+For simplicity, the model equation has been written as:<br>
+$y_t=\alpha+\beta x_t+\varepsilon$ <br>
+
+where, $y_t = r_t^{TCS}$ and $x_t=r_t^{Nifty}$ 
+
+For the method of moments, the following three moment conditions are followed in order to estimate the unknown parameters $\alpha$, $\beta$ and $\sigma$.<br>
+ 
+**(1)** $\mathbb{E}(y_t-\alpha-\beta x_t)=0$ <br>
+
+**(2)** $\mathbb{E}(x_t(y_t-\alpha-\beta x_t))=0$ <br>
+
+**(3)** $\mathbb{E}(\varepsilon^2)=0$ <br>
+
+Using the above moment conditions, we have the following forms of $\alpha$, $\beta$ and $\sigma$,<br>
+
+$\hat{\alpha}=\bar{y_t}-\hat{\beta} \bar{x_t}$,<br>
+
+$\hat{\beta} = \frac{\sum_{t=1}^{n}(x_t-\bar{x})(y_t-\bar{y})}{\sum_{t=1}^{n}(x_t-\bar{x})^2}$, and <br>
+
+$\sigma^2 = \mathbb{V}ar(\varepsilon) = \mathbb{V}ar(y_t-\hat{\alpha}-\hat{\beta} x_t)$
+
+```{r}
+#MoM
+x <- retrn$NSEI.Adjusted
+y <- retrn$TCS.NS.Adjusted
+n <- length(x)
+betahat <- sum((x-mean(x))*(y-mean(y)))/sum((x-mean(x))**2)
+alphahat <- mean(y)-betahat*mean(x)
+yhat <- alphahat + betahat*x
+resi <- y-yhat
+sigma <- (sum(resi**2)/(n-1))**0.5
+```
+
+
+## Part 2: 
+
+Estimate the parameters using the `lm` built-in function of `R`. Note that `lm` using the OLS method.
+
+### Answer:
+
+```{r}
+#linear model using OLS
+model<-lm(retrn$TCS.NS.Adjusted~retrn$NSEI.Adjusted,data=retrn)
+summary(model)
+```
+
+## Part 3:
+
+Fill-up the following table
+
+### Answer:
+
+```{r}
+#Filling table
+MM_OLS <- data.frame(Parameters=c('alpha','beta','sigma'),
+                     MoM=c(alphahat,betahat,sigma),
+                     OLS=c(model$coefficients[1],model$coefficients[2],var(model$residuals)**0.5))
+MM_OLS
+```
+
+Parameters |Method of Moments |OLS
+-----------|------------------|-------------
+   $\alpha$|      0.0004628227|0.0004628227
+    $\beta$|      0.7436835788|0.7436835788
+   $\sigma$|      0.0161868605|0.0161868605
+
+
+## Part 4: 
+
+If the current value of Nifty is 18000 and it goes up to 18200. The current value of TCS is Rs. 3200/-. How much you can expect TCS price to go up?
+
+### Answer:
+
+For this, the estimated parameters can be used to calculate the return of TCS which can give the expected price of TCS as follows,
+
+$r_t^{Nifty}=\log(P_t^{Nifty})-\log(P_{t-1}^{Nifty})=\log(18200)-log(18000)$<br>
+
+$r_t^{TCS}=\hat{\alpha}+\hat{\beta} r_t^{Nifty}$<br>
+
+$P_t^{TCS}= e^{r_t^{TCS}+\log(P_{t-1}^{TCS})} = e^{r_t^{TCS}+\log(3200)}$<br>
+
+```{r}
+# Predicting TCS price
+a <- log(18200)-log(18000)
+tcs_hat<-alphahat+betahat*a
+b<-exp(tcs_hat+log(3200))
+cat("Thus, the expected TCS price is ", b)
+```
