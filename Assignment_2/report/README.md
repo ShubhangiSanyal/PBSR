@@ -8,4 +8,6 @@ The individual reports contain the `R markdown` files for the individual problem
 - Problem 4 - done by Samriddha Adhikary (MDS202229)
 - Problems 1 and 5 - done by Shubhangi Sanyal (MDS202238)<br>
 
-All problems were checked and reviewed by all three collaborators.
+All problems were checked and reviewed by all three collaborators.<br>
+
+The file `Submit.Rmd` contains all the answers compiled into one single Rmd file for better reference.
