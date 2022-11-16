@@ -1,0 +1,152 @@
+---
+title: "**PBSR - Assignment 2**"
+author: "Shubhangi Sanyal<br>MDS202238"
+date: '2022-11-15'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Problem 5: Computational Finance - Modelling Stock prices
+
+Following piece of code download the prices of TCS since 2007
+
+```{r}
+library(quantmod)
+getSymbols('TCS.NS')
+tail(TCS.NS)
+```
+Plot the adjusted close prices of TCS
+```{r}
+plot(TCS.NS$TCS.NS.Adjusted)
+```
+
+**Download the data of market index Nifty50**. The Nifty 50 index indicates how the over all market has done over the similar period.
+```{r}
+getSymbols('^NSEI')
+tail(NSEI)
+```
+Plot the adjusted close value of Nifty50
+```{r}
+plot(NSEI$NSEI.Adjusted)
+```
+
+
+### Log-Return 
+We calculate the daily log-return, where log-return is defined as
+$$
+r_t=\log(P_t)-\log(P_{t-1})=\Delta \log(P_t),
+$$
+where $P_t$ is the closing price of the stock on $t^{th}$ day.
+
+```{r}
+TCS_rt = diff(log(TCS.NS$TCS.NS.Adjusted))
+Nifty_rt = diff(log(NSEI$NSEI.Adjusted))
+retrn = cbind.xts(TCS_rt,Nifty_rt) 
+retrn = na.omit(data.frame(retrn))
+
+plot(retrn$NSEI.Adjusted,retrn$TCS.NS.Adjusted
+     ,pch=20
+     ,xlab='Market Return'
+     ,ylab='TCS Return'
+     ,xlim=c(-0.18,0.18)
+     ,ylim=c(-0.18,0.18))
+grid(col='grey',lty=1)
+```
+
++ Consider the following model:
+
+$$
+r_{t}^{TCS}=\alpha + \beta r_{t}^{Nifty} + \varepsilon,
+$$
+where $\mathbb{E}(\varepsilon)=0$ and $\mathbb{V}ar(\varepsilon)=\sigma^2$.
+
+1. Estimate the parameters of the models $\theta=(\alpha,\beta,\sigma)$ using the method of moments type plug-in estimator discussed in the class.
+
+### Answer:
+
+For simplicity, the model equation has been written as:<br>
+$y_t=\alpha+\beta x_t+\varepsilon$ <br>
+
+where, $y_t = r_t^{TCS}$ and $x_t=r_t^{Nifty}$ 
+
+For the method of moments, the following three moment conditions are followed in order to estimate the unknown parameters $\alpha$, $\beta$ and $\sigma$.<br>
+ 
+**(1)** $\mathbb{E}(y_t-\alpha-\beta x_t)=0$ <br>
+
+**(2)** $\mathbb{E}(x_t(y_t-\alpha-\beta x_t))=0$ <br>
+
+**(3)** $\mathbb{E}(\varepsilon^2)=0$ <br>
+
+Using the above moment conditions, we have the following forms of $\alpha$, $\beta$ and $\sigma$,<br>
+
+$\hat{\alpha}=\bar{y_t}-\hat{\beta} \bar{x_t}$,<br>
+
+$\hat{\beta} = \frac{\sum_{t=1}^{n}(x_t-\bar{x})(y_t-\bar{y})}{\sum_{t=1}^{n}(x_t-\bar{x})^2}$, and <br>
+
+$\sigma^2 = \mathbb{V}ar(\varepsilon) = \mathbb{V}ar(y_t-\hat{\alpha}-\hat{\beta} x_t)$
+
+```{r}
+#MoM
+x <- retrn$NSEI.Adjusted
+y <- retrn$TCS.NS.Adjusted
+n <- length(x)
+betahat <- sum((x-mean(x))*(y-mean(y)))/sum((x-mean(x))**2)
+alphahat <- mean(y)-betahat*mean(x)
+yhat <- alphahat + betahat*x
+resi <- y-yhat
+sigma <- (sum(resi**2)/(n-1))**0.5
+```
+
+
+2. Estimate the parameters using the `lm` built-in function of `R`. Note that `lm` using the OLS method.
+
+### Answer:
+
+```{r}
+#linear model using OLS
+model<-lm(retrn$TCS.NS.Adjusted~retrn$NSEI.Adjusted,data=retrn)
+summary(model)
+```
+
+3. Fill-up the following table
+
+### Answer:
+
+```{r}
+#Filling table
+MM_OLS <- data.frame(Parameters=c('alpha','beta','sigma'),
+                     MoM=c(alphahat,betahat,sigma),
+                     OLS=c(model$coefficients[1],model$coefficients[2],var(model$residuals)**0.5))
+MM_OLS
+```
+
+Parameters |Method of Moments |OLS
+-----------|------------------|-------------
+   $\alpha$|      0.0004628227|0.0004628227
+    $\beta$|      0.7436835788|0.7436835788
+   $\sigma$|      0.0161868605|0.0161868605
+
+
+4. If the current value of Nifty is 18000 and it goes up to 18200. The current value of TCS is Rs. 3200/-. How much you can expect TCS price to go up?
+
+### Answer:
+
+For this, the estimated parameters can be used to calculate the return of TCS which can give the expected price of TCS as follows,
+
+$r_t^{Nifty}=\log(P_t^{Nifty})-\log(P_{t-1}^{Nifty})=\log(18200)-log(18000)$<br>
+
+$r_t^{TCS}=\hat{\alpha}+\hat{\beta} r_t^{Nifty}$<br>
+
+$P_t^{TCS}= e^{r_t^{TCS}+\log(P_{t-1}^{TCS})} = e^{r_t^{TCS}+\log(3200)}$<br>
+
+```{r}
+# Predicting TCS price
+a <- log(18200)-log(18000)
+tcs_hat<-alphahat+betahat*a
+b<-exp(tcs_hat+log(3200))
+
+cat("Thus, the expected TCS price is ", b)
+```
